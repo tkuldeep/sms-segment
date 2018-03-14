@@ -20,11 +20,10 @@ To install sms-segment, simply run `go get github.com/tkuldeep/sms-segment`.
 	)
 
 	func main() {
-		var sms smsSegment.SMS
+	    var sms smsSegment.SMS
         
-        	sms.Text = "Lorem ipsum dolor sit amet, pro dico aeque convenire et. 
-        	Qui ei ludus eruditi fabulas. Id viderer veritus duo,"
-        	sms.Process()
+        sms.Text = "Lorem ipsum dolor sit amet, pro dico aeque convenire et. Qui ei ludus eruditi fabulas. Id viderer veritus duo,"
+        sms.Process()
         messageSegment := sms.GetSegments()
 	}
 	
@@ -37,11 +36,10 @@ To install sms-segment, simply run `go get github.com/tkuldeep/sms-segment`.
 	)
 
 	func main() {
-		var sms smsSegment.SMS
+	    var sms smsSegment.SMS
         
-        	sms.Text = "Lorem ipsum dolor sit amet, pro dico aeque convenire et. 
-        	Qui ei ludus eruditi fabulas. Id viderer veritus duo,"
-        	sms.Process()
+        sms.Text = "Lorem ipsum dolor sit amet, pro dico aeque convenire et. Qui ei ludus eruditi fabulas. Id viderer veritus duo,"
+        sms.Process()
         characters := sms.GetCharacters()
 	}
 	
@@ -54,10 +52,9 @@ To install sms-segment, simply run `go get github.com/tkuldeep/sms-segment`.
 	)
 
 	func main() {
-		var sms smsSegment.SMS
+	    var sms smsSegment.SMS
         
-        	sms.Text = "Lorem ipsum dolor sit amet, pro dico aeque convenire et. 
-        	Qui ei ludus eruditi fabulas. Id viderer veritus duo,"
-        	sms.Process()
+        sms.Text = "Lorem ipsum dolor sit amet, pro dico aeque convenire et. Qui ei ludus eruditi fabulas. Id viderer veritus duo,"
+        sms.Process()
         encoding := sms.GetEncoding()
 	}
