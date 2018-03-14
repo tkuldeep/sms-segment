@@ -20,9 +20,9 @@ const (
 // SMS defines entity to store twilio SMS properties.
 type SMS struct {
 	Text      string
-	Encoding  string
-	Chracters int
-	Segments  int
+	encoding  string
+	chracters int
+	segments  int
 }
 
 // GSMCharacterSet defines all GSM characters.
@@ -173,29 +173,42 @@ func GSMCharacterSet() map[string]int {
 	return characters
 }
 
-// GetSegments return number of segment present in text.
-func (sms *SMS) GetSegments() int {
+// Process the sms and count number of segment present in text, find encoding and number characters.
+func (sms *SMS) Process() {
 	sms.getEncodingAndCount()
-	if sms.Encoding == EncodingGSM {
+	if sms.encoding == EncodingGSM {
 		sms.getGSMEncodingSegment()
 	} else {
 		sms.getUCSEncodingSegment()
 	}
+}
 
-	return sms.Segments
+// GetSegments return number of segment present in text.
+func (sms *SMS) GetSegments() int {
+	return sms.segments
+}
+
+// GetEncoding return number of segment present in text.
+func (sms *SMS) GetEncoding() string {
+	return sms.encoding
+}
+
+// GetCharacters return number of segment present in text.
+func (sms *SMS) GetCharacters() int {
+	return sms.chracters
 }
 
 // if message character length is less than or equal to 160, then twilio considers 1 segment.
 // for more than 160 characters twilio break the message into multiple message. and please Note that special header needs to be appended to handle concatenated messages, so each segment can only contain up to 153 characters.
 func (sms *SMS) getGSMEncodingSegment() {
-	if sms.Chracters <= GSMChractersLimit {
-		sms.Segments = 1
+	if sms.chracters <= GSMChractersLimit {
+		sms.segments = 1
 
 		return
 	}
 
-	d := float64(float64(sms.Chracters) / float64(GSMChractersMultiMessageLimit))
-	sms.Segments = int(math.Ceil(d))
+	d := float64(float64(sms.chracters) / float64(GSMChractersMultiMessageLimit))
+	sms.segments = int(math.Ceil(d))
 
 }
 
@@ -203,14 +216,14 @@ func (sms *SMS) getGSMEncodingSegment() {
 // for more than 70 characters twilio break the message into multiple message. and please Note that special header needs to be
 // appended to handle concatenated messages, so each segment can only contain up to 67 characters.
 func (sms *SMS) getUCSEncodingSegment() {
-	if sms.Chracters <= UCS2ChractersLimit {
-		sms.Segments = 1
+	if sms.chracters <= UCS2ChractersLimit {
+		sms.segments = 1
 
 		return
 	}
 
-	d := float64(float64(sms.Chracters) / float64(UCS2ChractersMultiMessageLimit))
-	sms.Segments = int(math.Ceil(d))
+	d := float64(float64(sms.chracters) / float64(UCS2ChractersMultiMessageLimit))
+	sms.segments = int(math.Ceil(d))
 }
 
 func (sms *SMS) getEncodingAndCount() {
@@ -227,6 +240,6 @@ func (sms *SMS) getEncodingAndCount() {
 		}
 	}
 
-	sms.Chracters = textLength
-	sms.Encoding = encoding
+	sms.chracters = textLength
+	sms.encoding = encoding
 }
